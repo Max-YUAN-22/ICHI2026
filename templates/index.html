@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cancer Navigation Agent - ICHI 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4A90E2 0%, #2E5090 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .chat-panel {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .panel-header h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .system-toggle {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .toggle-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message.user {
+            align-items: flex-end;
+        }
+
+        .message.ai {
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .message.user .message-bubble {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .message.ai .message-bubble {
+            background: #E3F2FD;
+            color: #1a1a1a;
+            border: 1px solid #BBDEFB;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .chat-input:focus {
+            border-color: #4A90E2;
+        }
+
+        .send-btn {
+            padding: 12px 24px;
+            background: #4A90E2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .send-btn:hover {
+            background: #2E5090;
+            transform: translateY(-2px);
+        }
+
+        .multimodal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .multimodal-btn {
+            padding: 10px 16px;
+            background: white;
+            border: 2px solid #4A90E2;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .multimodal-btn:hover {
+            background: #E3F2FD;
+        }
+
+        .features-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #4A90E2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            color: #4A90E2;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #4A90E2;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .resources-section {
+            background: #FFF3E0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid #FF9800;
+            font-size: 13px;
+        }
+
+        .multimodal-section {
+            background: #E8F5E9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid #4CAF50;
+            font-size: 13px;
+        }
+
+        .risk-alert {
+            background: #FFEBEE;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 3px solid #E74C3C;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Cancer Navigation Agent</h1>
+            <p>Intelligent Navigation System with Multimodal Support & Localized Resources</p>
+        </div>
+
+        <div class="main-content">
+            <div class="chat-panel">
+                <div class="panel-header">
+                    <h2>💬 Chat Interface</h2>
+                    <div class="system-toggle">
+                        <button class="toggle-btn active" onclick="switchSystem('ai')">AI Agent</button>
+                        <button class="toggle-btn" onclick="switchSystem('traditional')">Traditional</button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message ai">
+                        <div class="message-bubble">
+                            Welcome! I'm your AI Cancer Navigation Agent. I can help you with:
+                            <br>• Treatment information and side effects
+                            <br>• Process navigation (diagnosis → treatment → follow-up)
+                            <br>• Risk alerts based on Macau cancer data
+                            <br>• Local healthcare resources
+                            <br><br>How can I assist you today?
+                        </div>
+                        <div class="message-time">System</div>
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <div>AI is thinking...</div>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Ask about cancer treatment, side effects, or resources..." onkeypress="handleKeyPress(event)">
+                    <button class="send-btn" onclick="sendMessage()">Send</button>
+                </div>
+
+                <div class="multimodal-buttons">
+                    <button class="multimodal-btn" onclick="startVoiceInput()">
+                        🎤 Voice Input
+                    </button>
+                    <button class="multimodal-btn" onclick="uploadImage()">
+                        📷 Image Upload
+                    </button>
+                    <button class="multimodal-btn" onclick="showTimeline()">
+                        📊 Process Timeline
+                    </button>
+                </div>
+            </div>
+
+            <div class="features-panel">
+                <div class="feature-card" onclick="showProcessNavigation()">
+                    <h3>📋 Localized Process Navigation</h3>
+                    <p>15-step standardized process: Diagnosis (5 steps) → Treatment (5 steps) → Follow-up (5 steps). Each step linked to Macau local resources.</p>
+                </div>
+
+                <div class="feature-card" onclick="showRiskAlert()">
+                    <h3>⚠️ Lightweight Risk Alert</h3>
+                    <p>10 data-driven rules based on Macau cancer registry data (2003-2023). Personalized risk assessment with evidence-based recommendations.</p>
+                </div>
+
+                <div class="feature-card" onclick="showMultimodal()">
+                    <h3>🎤📷 Multimodal Functions</h3>
+                    <p>Voice interaction (Cantonese/Mandarin), image interpretation (OCR), and visual process flowcharts for low-health-literacy populations.</p>
+                </div>
+
+                <div class="feature-card" onclick="showResources()">
+                    <h3>🏥 Local Resources</h3>
+                    <p>Macau hospitals, cancer associations, and community healthcare centers with contact information and service details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSystem = 'ai';
+
+        function switchSystem(system) {
+            currentSystem = system;
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            document.getElementById('loading').classList.add('active');
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        query: message,
+                        system_type: currentSystem,
+                        context: {
+                            age: 55,
+                            gender: 'female'
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                addMessage(data.response, 'ai');
+            } catch (error) {
+                addMessage('Sorry, there was an error processing your request.', 'ai');
+            } finally {
+                document.getElementById('loading').classList.remove('active');
+            }
+        }
+
+        function addMessage(text, type) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            
+            let formattedText = text;
+            
+            if (text.includes('【Local Healthcare Resources】')) {
+                const parts = text.split('【Local Healthcare Resources】');
+                formattedText = parts[0] + '<div class="resources-section">【Local Healthcare Resources】' + parts[1].split('【Multimodal Support】')[0] + '</div>';
+                if (text.includes('【Multimodal Support】')) {
+                    formattedText += '<div class="multimodal-section">【Multimodal Support】' + text.split('【Multimodal Support】')[1] + '</div>';
+                }
+            } else if (text.includes('【Risk Alert】')) {
+                formattedText = text.replace('【Risk Alert】', '<div class="risk-alert">【Risk Alert】');
+                formattedText += '</div>';
+            } else {
+                formattedText = text.replace(/\n/g, '<br>');
+            }
+            
+            bubble.innerHTML = formattedText;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            timeDiv.textContent = new Date().toLocaleTimeString();
+            
+            messageDiv.appendChild(bubble);
+            messageDiv.appendChild(timeDiv);
+            messagesDiv.appendChild(messageDiv);
+            
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function startVoiceInput() {
+            alert('Voice input feature: Click to start recording. Supports Cantonese and Mandarin.');
+        }
+
+        function uploadImage() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    alert('Image uploaded. Processing with OCR...');
+                }
+            };
+            input.click();
+        }
+
+        async function showTimeline() {
+            try {
+                const response = await fetch('/api/timeline');
+                const data = await response.json();
+                alert(`Current Stage: ${data.current_stage}\nCurrent Step: ${data.current_step}\n\nStages:\n${data.stages.map(s => `- ${s.name}`).join('\n')}`);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function showProcessNavigation() {
+            alert('Process Navigation: 15-step standardized process across 3 stages (Diagnosis, Treatment, Follow-up). Each step linked to Macau local resources.');
+        }
+
+        function showRiskAlert() {
+            alert('Risk Alert: 10 data-driven rules based on Macau cancer registry data (2003-2023). Provides personalized risk assessment.');
+        }
+
+        function showMultimodal() {
+            alert('Multimodal Functions:\n• Voice: Cantonese/Mandarin support\n• Image: OCR for medical reports\n• Visualization: Interactive timeline charts');
+        }
+
+        function showResources() {
+            alert('Local Resources:\n• Conde S. Januário Hospital: +853-2831-3731\n• Kiang Wu Hospital: +853-2882-2371\n• Macau Cancer Society: +853-2825-3381');
+        }
+    </script>
+</body>
+</html>
+

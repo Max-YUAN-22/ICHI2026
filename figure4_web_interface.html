@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Figure 4: Web Interface Showcase</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: white;
+            padding: 15px;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 12px;
+            width: 100%;
+            height: 100%;
+            max-width: 1400px;
+            max-height: 800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            border: 2px solid #E0E0E0;
+            border-radius: 6px;
+            padding: 12px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel-label {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10pt;
+            font-weight: bold;
+            color: #333;
+            background: rgba(255,255,255,0.95);
+            padding: 4px 12px;
+            border-radius: 4px;
+            border: 1px solid #E0E0E0;
+        }
+
+        .panel-a {
+            background: linear-gradient(to bottom, #4A90E2 0%, #4A90E2 50px, white 50px);
+        }
+
+        .panel-a .header {
+            color: white;
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow: hidden;
+            padding: 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .user-message {
+            background: #F5F5F5;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 10pt;
+            max-width: 75%;
+            line-height: 1.4;
+        }
+
+        .ai-message {
+            background: #E3F2FD;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-left: auto;
+            max-width: 85%;
+            font-size: 9pt;
+            line-height: 1.5;
+            border: 1px solid #BBDEFB;
+        }
+
+        .ai-message strong {
+            color: #1976D2;
+            display: block;
+            margin: 4px 0 2px 0;
+            font-size: 9.5pt;
+        }
+
+        .resources-section {
+            background: #FFF3E0;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-top: 6px;
+            font-size: 8pt;
+            border-left: 2px solid #FF9800;
+        }
+
+        .multimodal-section {
+            background: #E8F5E9;
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-top: 6px;
+            font-size: 8pt;
+            border-left: 2px solid #4CAF50;
+        }
+
+        .interface-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid #4A90E2;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .timeline-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .panel-b {
+            background: linear-gradient(to bottom, #8E8E93 0%, #8E8E93 50px, white 50px);
+        }
+
+        .panel-b .header {
+            color: white;
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .traditional-response {
+            background: #F5F5F5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 10pt;
+            line-height: 1.5;
+            text-align: center;
+            color: #666;
+        }
+
+        .panel-c {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .multimodal-subsection {
+            flex: 1;
+            border: 1.5px solid #E0E0E0;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .multimodal-subsection strong {
+            font-size: 10pt;
+            margin-bottom: 6px;
+        }
+
+        .voice-interface {
+            background: #E3F2FD;
+        }
+
+        .waveform {
+            width: 100%;
+            height: 35px;
+            background: linear-gradient(90deg, 
+                #4A90E2 0%, #4A90E2 8%, 
+                transparent 8%, transparent 16%,
+                #4A90E2 16%, #4A90E2 24%,
+                transparent 24%, transparent 32%,
+                #4A90E2 32%, #4A90E2 40%,
+                transparent 40%, transparent 48%,
+                #4A90E2 48%, #4A90E2 56%,
+                transparent 56%, transparent 64%,
+                #4A90E2 64%, #4A90E2 72%,
+                transparent 72%, transparent 80%,
+                #4A90E2 80%, #4A90E2 88%,
+                transparent 88%, transparent 100%);
+            border-radius: 4px;
+            margin: 6px 0;
+        }
+
+        .voice-text {
+            font-size: 8pt;
+            color: #1976D2;
+        }
+
+        .image-interface {
+            background: #FFF9C4;
+        }
+
+        .document-icon {
+            width: 50px;
+            height: 65px;
+            background: white;
+            border: 2px solid #999;
+            border-radius: 4px;
+            margin: 6px auto;
+            position: relative;
+        }
+
+        .document-icon::after {
+            content: "📄";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+        }
+
+        .ocr-box {
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            margin-top: 6px;
+            font-size: 8pt;
+            border: 1px solid #CCC;
+            font-family: 'Courier New', monospace;
+        }
+
+        .process-visualization {
+            background: #E8F5E9;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 8px 0;
+            gap: 6px;
+        }
+
+        .timeline-step {
+            flex: 1;
+            text-align: center;
+            padding: 8px 4px;
+            border-radius: 6px;
+            font-size: 8.5pt;
+            font-weight: bold;
+        }
+
+        .step-diagnosis {
+            background: #4A90E2;
+            color: white;
+        }
+
+        .step-treatment {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .step-followup {
+            background: #FF9800;
+            color: white;
+        }
+
+        .arrow {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .current-phase {
+            text-align: center;
+            font-size: 8pt;
+            margin-top: 6px;
+            color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .panel-d {
+            background: #FAFAFA;
+        }
+
+        .metrics-title {
+            font-size: 11pt;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #E0E0E0;
+        }
+
+        .metric-item {
+            margin-bottom: 12px;
+        }
+
+        .metric-label {
+            font-size: 9.5pt;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .bar-label {
+            font-size: 7.5pt;
+            color: #666;
+        }
+
+        .bar {
+            height: 22px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 6px;
+            color: white;
+            font-size: 8.5pt;
+            font-weight: bold;
+        }
+
+        .bar-ai {
+            background: linear-gradient(90deg, #2E5090 0%, #4A90E2 100%);
+        }
+
+        .bar-traditional {
+            background: linear-gradient(90deg, #95A5A6 0%, #BDC3C7 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Panel A: AI-Powered Interface -->
+        <div class="panel panel-a">
+            <div class="header">AI Cancer Navigation Agent</div>
+            <div class="timeline-btn">📊</div>
+            <div class="chat-container">
+                <div class="user-message">
+                    What are the side effects of chemotherapy for breast cancer?
+                </div>
+                <div class="ai-message">
+                    Common chemotherapy side effects include:<br><br>
+                    <strong>1. 🤢 Nausea & Vomiting</strong><br>
+                    • Management: Anti-nausea medication<br>
+                    • Timing: Usually 1-2 days post-treatment<br><br>
+                    <strong>2. 😴 Fatigue</strong><br>
+                    • Rest periods recommended<br>
+                    • Light exercise when possible<br><br>
+                    <div class="resources-section">
+                        <strong>【Local Healthcare Resources】</strong><br>
+                        🏥 Hospital A Emergency: [Contact available]<br>
+                        ☎️ Hospital B 24hr Hotline: [Contact available]
+                    </div>
+                    <div class="multimodal-section">
+                        <strong>【Multimodal Support】</strong><br>
+                        🗣️ Voice version | 📊 Visual timeline
+                    </div>
+                </div>
+            </div>
+            <div class="interface-buttons">
+                <div class="btn">🎤</div>
+                <div class="btn">📷</div>
+            </div>
+            <div class="panel-label">(a) AI-Powered Interface</div>
+        </div>
+
+        <!-- Panel B: Traditional Interface -->
+        <div class="panel panel-b">
+            <div class="header">Traditional System</div>
+            <div class="chat-container">
+                <div class="user-message">
+                    What are the side effects of chemotherapy for breast cancer?
+                </div>
+                <div class="traditional-response">
+                    For information about chemotherapy side effects, please consult your healthcare provider or oncologist.
+                </div>
+            </div>
+            <div class="panel-label">(b) Traditional Baseline Interface</div>
+        </div>
+
+        <!-- Panel C: Multimodal Functions -->
+        <div class="panel panel-c">
+            <div class="multimodal-subsection voice-interface">
+                <strong>🎤 Voice Interface</strong>
+                <div class="waveform"></div>
+                <div class="voice-text">
+                    Voice Input: 'How to manage side effects?'<br>
+                    ✓ Multi-language recognized
+                </div>
+            </div>
+            <div class="multimodal-subsection image-interface">
+                <strong>📷 Image Interpretation</strong>
+                <div class="document-icon"></div>
+                <div class="ocr-box">
+                    📄 Extracted: WBC 4.2, Platelets 180...<br>
+                    → Blood counts within normal range
+                </div>
+            </div>
+            <div class="multimodal-subsection process-visualization">
+                <strong>📊 Process Visualization</strong>
+                <div class="timeline">
+                    <div class="timeline-step step-diagnosis">Diagnosis</div>
+                    <span class="arrow">→</span>
+                    <div class="timeline-step step-treatment">Treatment</div>
+                    <span class="arrow">→</span>
+                    <div class="timeline-step step-followup">Follow-up</div>
+                </div>
+                <div class="current-phase">Current: Treatment Phase</div>
+            </div>
+            <div class="panel-label">(c) Multimodal Functions Demonstration</div>
+        </div>
+
+        <!-- Panel D: Performance Metrics -->
+        <div class="panel panel-d">
+            <div class="metrics-title">System Performance</div>
+            <div class="metric-item">
+                <div class="metric-label">Accuracy</div>
+                <div class="bar-container">
+                    <div class="bar-wrapper">
+                        <div class="bar-label">AI</div>
+                        <div class="bar bar-ai" style="width: 83%;">4.16</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar-label">Traditional</div>
+                        <div class="bar bar-traditional" style="width: 60%;">3.00</div>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Completeness</div>
+                <div class="bar-container">
+                    <div class="bar-wrapper">
+                        <div class="bar-label">AI</div>
+                        <div class="bar bar-ai" style="width: 85%;">4.23</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar-label">Traditional</div>
+                        <div class="bar bar-traditional" style="width: 56%;">2.80</div>
+                    </div>
+                </div>
+            </div>
+            <div class="metric-item">
+                <div class="metric-label">Satisfaction</div>
+                <div class="bar-container">
+                    <div class="bar-wrapper">
+                        <div class="bar-label">AI</div>
+                        <div class="bar bar-ai" style="width: 83%;">4.16</div>
+                    </div>
+                    <div class="bar-wrapper">
+                        <div class="bar-label">Traditional</div>
+                        <div class="bar bar-traditional" style="width: 61%;">3.03</div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-label">(d) Performance Comparison</div>
+        </div>
+    </div>
+</body>
+</html>
