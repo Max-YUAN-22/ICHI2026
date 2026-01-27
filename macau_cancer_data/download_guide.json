@@ -1,0 +1,77 @@
+{
+  "title": "澳门癌症数据下载指南",
+  "source": "澳门特别行政区政府数据开放平台",
+  "url": "https://data.gov.mo/Datasets",
+  "datasets": [
+    {
+      "name": "十大死亡癌症個案",
+      "description": "疾病預防控制範疇十大死亡癌症個案",
+      "detail_url": "https://data.gov.mo/Detail?id=420d8915-1599-4fee-9cba-50df76c482ee",
+      "filename": "topTenDeathCancerCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "十大癌症新增個案",
+      "description": "疾病預防控制範疇十大癌症新增個案",
+      "detail_url": "https://data.gov.mo/Detail?id=3be8ebf8-4a12-4acf-b5bc-2877bd7d68ca",
+      "filename": "topTenNewCancerCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "按歲組劃分的2020年主要新增癌症個案",
+      "description": "疾病預防控制範疇按歲組劃分的二ｏ二ｏ年主要新增癌症個案",
+      "detail_url": "https://data.gov.mo/Detail?id=edde9246-5ac7-449b-9f71-ab39b49ec4c3",
+      "filename": "cancerCasesByAgeGroup2020.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "癌症登記年報新個案數",
+      "description": "澳門癌症登記年報癌症新個案數",
+      "detail_url": "https://data.gov.mo/Detail?id=26a9e6d1-309b-43cc-8e5e-1ebe01999e1e",
+      "filename": "cancerRegistryNewCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "癌症登記年報死亡個案數",
+      "description": "澳門癌症登記年報癌症死亡個案數",
+      "detail_url": "https://data.gov.mo/Detail?id=fb690057-3e6d-4b3d-b8e4-3add6de0c60a",
+      "filename": "cancerRegistryDeathCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "癌症登記年報發生率",
+      "description": "澳門癌症登記年報每十萬人口之癌症發生率",
+      "detail_url": "https://data.gov.mo/Detail?id=6d0e91a7-5478-4b96-924c-c66de1895225",
+      "filename": "cancerRegistryIncidenceRate.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "女性癌症新個案數",
+      "description": "澳門癌症登記年報的女性癌症新個案數",
+      "detail_url": "https://data.gov.mo/Detail?id=9d745557-d9e1-4e4f-9c19-422d72cd7091",
+      "filename": "femaleCancerNewCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "女性癌症死亡率",
+      "description": "澳門癌症登記年報每十萬女性之癌症死亡率",
+      "detail_url": "https://data.gov.mo/Detail?id=4d781976-f108-453d-8634-2190ff8ce514",
+      "filename": "femaleCancerMortalityRate.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "男性癌症新個案數",
+      "description": "澳門癌症登記年報男性癌症新個案數",
+      "detail_url": "https://data.gov.mo/Detail?id=a7525a1a-46ce-4c64-ad8b-2aea86179a6f",
+      "filename": "maleCancerNewCases.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    },
+    {
+      "name": "癌症死亡率",
+      "description": "澳門癌症登記年報每十萬人口之癌症死亡率",
+      "detail_url": "https://data.gov.mo/Detail?id=f7f6b2ab-09cb-4370-9071-dcb62518d8a7",
+      "filename": "cancerMortalityRate.xlsx",
+      "download_method": "访问详情页，点击下载按钮"
+    }
+  ]
+}
