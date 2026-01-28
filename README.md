@@ -1,4 +1,4 @@
-# A Lightweight, Deployable AI Agent for Cancer Care Navigation
+# A Lightweight, Deployable AI Agent for Cancer Care Navigation: A Data-Driven Approach for Regions with Unique Epidemiological Profiles
 
 A data-driven AI system for cancer care navigation in regions with unique epidemiological profiles.
 
